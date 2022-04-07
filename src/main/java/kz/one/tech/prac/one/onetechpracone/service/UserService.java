@@ -5,44 +5,56 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
 @Service
 public class UserService {
     private AdministrationService administrationService;
-    private Scanner scanner;
+    private BufferedReader bufferedReader;
 
     @Autowired
-    public UserService(AdministrationService administrationService, Scanner scanner) {
+    public UserService(AdministrationService administrationService, BufferedReader bufferedReader) {
         this.administrationService = administrationService;
-        this.scanner = scanner;
+        this.bufferedReader = bufferedReader;
     }
 
     public void runApp() {
-        int input;
+        String input;
+        boolean stop = false;
 
-        while (true) {
-            showMainMenu();
-            input = scanner.nextShort();
+        try {
+            while (!stop) {
+                showMainMenu();
 
-            switch (input) {
-                case 1:
-                    createNewStudent();
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    showStudentList();
-                    break;
-                case 0:
-                    break;
-                default:
-                    System.out.println("Unavailable option!!!");
+                System.out.println("input: ");
+
+                input = bufferedReader.readLine().trim();
+
+                switch (input) {
+                    case "1":
+                        createNewStudent();
+                        break;
+                    case "2":
+                        break;
+                    case "3":
+                        break;
+                    case "4":
+                        showStudentList();
+                        break;
+                    case "0":
+                        stop = true;
+                        break;
+                    default:
+                        System.out.println("Unavailable option!!!");
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
 
     public void showMainMenu() {
@@ -53,25 +65,25 @@ public class UserService {
         System.out.println("0 - EXIT");
     }
 
-    public void createNewStudent() {
+    public void createNewStudent() throws IOException {
         String firstName, lastName, city;
         double gpa;
         boolean isHaveScholarship;
 
-        System.out.print("FirstName: ");
-        firstName = scanner.nextLine();
+        System.out.println("FirstName: ");
+        firstName = bufferedReader.readLine().trim();
 
-        System.out.print("LastName: ");
-        lastName = scanner.nextLine();
+        System.out.println("LastName: ");
+        lastName = bufferedReader.readLine().trim();
 
-        System.out.print("City: ");
-        city = scanner.nextLine();
+        System.out.println("City: ");
+        city = bufferedReader.readLine().trim();
 
-        System.out.print("GPA: ");
-        gpa = scanner.nextDouble();
+        System.out.println("GPA: ");
+        gpa = Double.parseDouble(bufferedReader.readLine().trim());
 
-        System.out.print("Is have scholarship (true or false): ");
-        isHaveScholarship = scanner.nextBoolean();
+        System.out.println("Is have scholarship (true or false): ");
+        isHaveScholarship = Boolean.parseBoolean(bufferedReader.readLine().trim());
 
         Student student = administrationService.createNewUser(
                 firstName,
