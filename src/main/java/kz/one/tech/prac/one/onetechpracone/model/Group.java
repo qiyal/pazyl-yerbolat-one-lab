@@ -2,10 +2,10 @@ package kz.one.tech.prac.one.onetechpracone.model;
 
 public class Group {
     private String name;
-    private Integer numberCount;
+    private Integer memberCount;
     private Professor supervisor;
 
-    Group() {}
+    public Group() {}
 
     public static GroupBuilder groupBuilder() {
         return new Group().new GroupBuilder();
@@ -20,8 +20,8 @@ public class Group {
             return this;
         }
 
-        public GroupBuilder numberCount(Integer numberCount) {
-            Group.this.numberCount = numberCount;
+        public GroupBuilder memberCount(Integer memberCount) {
+            Group.this.memberCount = memberCount;
             return this;
         }
 
@@ -40,8 +40,8 @@ public class Group {
         return name;
     }
 
-    public Integer getNumberCount() {
-        return numberCount;
+    public Integer getMemberCount() {
+        return memberCount;
     }
 
     public Professor getSupervisor() {
@@ -53,8 +53,8 @@ public class Group {
         this.name = name;
     }
 
-    public void setNumberCount(Integer numberCount) {
-        this.numberCount = numberCount;
+    public void setMemberCount(Integer memberCount) {
+        this.memberCount = memberCount;
     }
 
     public void setSupervisor(Professor supervisor) {
@@ -65,7 +65,7 @@ public class Group {
     public String toString() {
         return "Group{" +
                 "name='" + name + '\'' +
-                ", numberCount=" + numberCount +
+                ", memberCount=" + memberCount +
                 ", supervisor=" + supervisor +
                 '}';
     }

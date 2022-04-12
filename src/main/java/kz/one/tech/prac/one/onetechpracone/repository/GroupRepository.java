@@ -9,4 +9,5 @@ import java.util.List;
 public interface GroupRepository {
     List<Group> getAllGroup();
     Group getGroupByName();
+    void addGroup(Group group);
 }

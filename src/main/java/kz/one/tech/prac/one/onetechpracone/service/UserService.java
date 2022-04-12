@@ -1,15 +1,14 @@
 package kz.one.tech.prac.one.onetechpracone.service;
 
+import kz.one.tech.prac.one.onetechpracone.model.Group;
 import kz.one.tech.prac.one.onetechpracone.model.Professor;
 import kz.one.tech.prac.one.onetechpracone.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Scanner;
 
 @Service
 public class UserService {
@@ -44,12 +43,15 @@ public class UserService {
                         createNewProfessor();
                         break;
                     case "3":
-                        break;
+                        createNewGroup();
                     case "4":
                         showStudentList();
                         break;
                     case "5":
                         showProfessorList();
+                        break;
+                    case "6":
+                        showGroupList();
                         break;
                     case "0":
                         stop();
@@ -136,6 +138,40 @@ public class UserService {
         administrationService.addProfessorToList(professor);
     }
 
+    public void createNewGroup() throws IOException {
+        String name;
+        int membersCount;
+        Professor professor = null;
+
+        System.out.println("\n**** CREATE NEW GROUP *****");
+        System.out.print("Name: ");
+        name = bufferedReader.readLine().trim();
+
+        System.out.print("Members count: ");
+        membersCount = Integer.parseInt(bufferedReader.readLine().trim());
+
+        // shows list of professors
+        String input = "-";
+        if (administrationService.getAllProfessors().size() > 0) {
+            showProfessorList();
+            System.out.println("-) none");
+            System.out.print("input (- or index): ");
+            input = bufferedReader.readLine().trim();
+        }
+
+        // set professor
+        if (!input.equals("-")) {
+            professor = administrationService.getAllProfessors().get(Integer.parseInt(input));
+        }
+
+        Group group = administrationService.createNewGroup(
+                name,
+                membersCount,
+                professor);
+
+        administrationService.addGroupToList(group);
+    }
+
     public void showStudentList() {
         int i = 0;
         System.out.println("\n*** List of Student ***");
@@ -149,6 +185,15 @@ public class UserService {
         int i = 0;
         System.out.println("\n*** List of Professor ***");
         administrationService.getAllProfessors()
+                .forEach(
+                        item -> System.out.println(i + ") " + item)
+                );
+    }
+
+    public void showGroupList() {
+        int i = 0;
+        System.out.println("\n*** List of Group ***");
+        administrationService.getAllGroups()
                 .forEach(
                         item -> System.out.println(i + ") " + item)
                 );

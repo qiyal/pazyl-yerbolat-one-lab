@@ -19,11 +19,16 @@ public class GroupRepositoryImpl implements GroupRepository {
 
     @Override
     public List<Group> getAllGroup() {
-        return null;
+        return groupList;
     }
 
     @Override
     public Group getGroupByName() {
         return null;
+    }
+
+    @Override
+    public void addGroup(Group group) {
+        groupList.add(group);
     }
 }

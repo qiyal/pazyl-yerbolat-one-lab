@@ -48,6 +48,14 @@ public class AdministrationService {
                 .build();
     }
 
+    public Group createNewGroup(String name, Integer numberCount, Professor professor) {
+        return Group.groupBuilder()
+                .name(name)
+                .memberCount(numberCount)
+                .supervisor(professor)
+                .build();
+    }
+
     public void addUserToList(Student student) {
         studentRepository.addStudent(student);
     }
@@ -56,11 +64,19 @@ public class AdministrationService {
         professorRepository.addProfessor(professor);
     }
 
+    public void addGroupToList(Group group) {
+        groupRepository.addGroup(group);
+    }
+
     public List<Student> getAllStudents() {
         return studentRepository.getAllStudent();
     }
 
     public List<Professor> getAllProfessors() {
         return professorRepository.getAllProfessor();
+    }
+
+    public List<Group> getAllGroups() {
+        return groupRepository.getAllGroup();
     }
 }
