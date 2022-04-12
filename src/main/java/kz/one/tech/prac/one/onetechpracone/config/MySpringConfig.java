@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Scanner;
 
 @Configuration
 @ComponentScan("kz.one.tech.prac.one.onetechpracone")

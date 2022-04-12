@@ -1,5 +1,6 @@
 package kz.one.tech.prac.one.onetechpracone.service;
 
+import kz.one.tech.prac.one.onetechpracone.model.Professor;
 import kz.one.tech.prac.one.onetechpracone.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ import java.util.Scanner;
 public class UserService {
     private AdministrationService administrationService;
     private BufferedReader bufferedReader;
+    private boolean isRun;
 
     @Autowired
     public UserService(AdministrationService administrationService, BufferedReader bufferedReader) {
@@ -23,13 +25,14 @@ public class UserService {
 
     public void runApp() {
         String input;
-        boolean stop = false;
+        isRun = true;
 
+        System.out.println("\n ***** START APP *****");
         try {
-            while (!stop) {
+            while (isRun) {
                 showMainMenu();
 
-                System.out.println("input: ");
+                System.out.print("input: ");
 
                 input = bufferedReader.readLine().trim();
 
@@ -38,14 +41,19 @@ public class UserService {
                         createNewStudent();
                         break;
                     case "2":
+                        createNewProfessor();
                         break;
                     case "3":
                         break;
                     case "4":
                         showStudentList();
                         break;
+                    case "5":
+                        showProfessorList();
+                        break;
                     case "0":
-                        stop = true;
+                        stop();
+                        System.out.println("\n*** APP EXIT ***");
                         break;
                     default:
                         System.out.println("Unavailable option!!!");
@@ -57,11 +65,17 @@ public class UserService {
 
     }
 
+    private void stop() {
+        this.isRun = false;
+    }
+
     public void showMainMenu() {
-        System.out.println("1 - creat new student");
-        System.out.println("2 - creat new teacher");
+        System.out.println("\n1 - creat new Student");
+        System.out.println("2 - creat new Professors");
         System.out.println("3 - create new Group");
-        System.out.println("4 - show list of students");
+        System.out.println("4 - show list of Students");
+        System.out.println("5 - show list of Professors");
+        System.out.println("6 - show list of Groups");
         System.out.println("0 - EXIT");
     }
 
@@ -70,19 +84,20 @@ public class UserService {
         double gpa;
         boolean isHaveScholarship;
 
-        System.out.println("FirstName: ");
+        System.out.println("\n**** CREATE NEW STUDENT *****");
+        System.out.print("FirstName: ");
         firstName = bufferedReader.readLine().trim();
 
-        System.out.println("LastName: ");
+        System.out.print("LastName: ");
         lastName = bufferedReader.readLine().trim();
 
-        System.out.println("City: ");
+        System.out.print("City: ");
         city = bufferedReader.readLine().trim();
 
-        System.out.println("GPA: ");
+        System.out.print("GPA: ");
         gpa = Double.parseDouble(bufferedReader.readLine().trim());
 
-        System.out.println("Is have scholarship (true or false): ");
+        System.out.print("Is have scholarship (true or false): ");
         isHaveScholarship = Boolean.parseBoolean(bufferedReader.readLine().trim());
 
         Student student = administrationService.createNewUser(
@@ -96,10 +111,44 @@ public class UserService {
         administrationService.addUserToList(student);
     }
 
+    public void createNewProfessor() throws IOException {
+        String firstName, lastName, email, departmentName;
+
+        System.out.println("\n**** CREATE NEW PROFESSOR *****");
+        System.out.print("First Name: ");
+        firstName = bufferedReader.readLine().trim();
+
+        System.out.print("Last Name: ");
+        lastName = bufferedReader.readLine().trim();
+
+        System.out.print("Email: ");
+        email = bufferedReader.readLine().trim();
+
+        System.out.print("Department Name: ");
+        departmentName =  bufferedReader.readLine().trim();
+
+        Professor professor = administrationService.createNewProfessor(
+                firstName,
+                lastName,
+                email,
+                departmentName);
+
+        administrationService.addProfessorToList(professor);
+    }
+
     public void showStudentList() {
         int i = 0;
-        System.out.println("List of Student");
+        System.out.println("\n*** List of Student ***");
         administrationService.getAllStudents()
+                .forEach(
+                        item -> System.out.println(i + ") " + item)
+                );
+    }
+
+    public void showProfessorList() {
+        int i = 0;
+        System.out.println("\n*** List of Professor ***");
+        administrationService.getAllProfessors()
                 .forEach(
                         item -> System.out.println(i + ") " + item)
                 );

@@ -39,12 +39,28 @@ public class AdministrationService {
                       .build();
     }
 
+    public Professor createNewProfessor(String firstName, String lastName, String email, String departmentName) {
+        return Professor.professorBuilder()
+                .firstName(firstName)
+                .lastName(lastName)
+                .email(email)
+                .departmentName(departmentName)
+                .build();
+    }
+
     public void addUserToList(Student student) {
         studentRepository.addStudent(student);
+    }
+
+    public void addProfessorToList(Professor professor) {
+        professorRepository.addProfessor(professor);
     }
 
     public List<Student> getAllStudents() {
         return studentRepository.getAllStudent();
     }
 
+    public List<Professor> getAllProfessors() {
+        return professorRepository.getAllProfessor();
+    }
 }

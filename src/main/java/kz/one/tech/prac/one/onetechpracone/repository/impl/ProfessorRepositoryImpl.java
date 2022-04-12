@@ -20,11 +20,16 @@ public class ProfessorRepositoryImpl implements ProfessorRepository {
 
     @Override
     public List<Professor> getAllProfessor() {
-        return null;
+        return professorList;
     }
 
     @Override
     public List<Professor> getProfessorsByFirstNameOrLastName() {
         return null;
+    }
+
+    @Override
+    public void addProfessor(Professor professor) {
+        professorList.add(professor);
     }
 }

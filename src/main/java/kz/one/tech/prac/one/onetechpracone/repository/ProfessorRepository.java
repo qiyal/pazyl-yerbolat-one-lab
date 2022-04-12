@@ -9,4 +9,5 @@ import java.util.List;
 public interface ProfessorRepository {
     List<Professor> getAllProfessor();
     List<Professor> getProfessorsByFirstNameOrLastName();
+    void addProfessor(Professor professor);
 }
