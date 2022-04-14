@@ -5,7 +5,8 @@ import kz.one.tech.prac.one.onetechpracone.model.Professor;
 import java.util.List;
 
 public interface ProfessorRepository {
-    List<Professor> getAllProfessor();
-    List<Professor> getProfessorsByFirstNameOrLastName();
-    void addProfessor(Professor professor);
+    void insert(String firstName, String lastName, String email, String departmentName);
+    void delete(Integer id);
+    List<Professor> selectAll();
+    List<Professor> findByDepartmentName(String departmentName);
 }
